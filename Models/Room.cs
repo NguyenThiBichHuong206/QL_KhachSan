@@ -8,7 +8,9 @@ namespace QLKhachsan.Models
         public string RoomNumber { get; set; }
         public string RoomType { get; set; }
         public string Status { get; set; }
+        public int StatusValue { get; set; }
         public decimal PricePerNight { get; set; }
+        public string ImagePath { get; set; }
 
         public string PriceText
         {
@@ -17,12 +19,12 @@ namespace QLKhachsan.Models
 
         public bool IsAvailable
         {
-            get { return string.Equals(Status, "Trong", StringComparison.OrdinalIgnoreCase); }
+            get { return StatusValue == 0 || string.Equals(Status, "Trong", StringComparison.OrdinalIgnoreCase); }
         }
 
         public bool IsOccupied
         {
-            get { return string.Equals(Status, "Dang o", StringComparison.OrdinalIgnoreCase); }
+            get { return StatusValue == 1 || string.Equals(Status, "Dang thue", StringComparison.OrdinalIgnoreCase); }
         }
 
         public bool IsWaitingCheckIn

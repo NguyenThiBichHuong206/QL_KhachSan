@@ -8,14 +8,15 @@ namespace QLKhachsan.Models
         public string CustomerName { get; set; }
         public string RoomNumber { get; set; }
         public DateTime CheckInDate { get; set; }
-        public DateTime CheckOutDate { get; set; }
+        public DateTime? CheckOutDate { get; set; }
         public string Status { get; set; }
 
         public string Summary
         {
             get
             {
-                var nights = Math.Max(1, (CheckOutDate.Date - CheckInDate.Date).Days);
+                var checkOutDate = CheckOutDate.HasValue ? CheckOutDate.Value.Date : DateTime.Today;
+                var nights = Math.Max(1, (checkOutDate - CheckInDate.Date).Days);
                 return "Phong " + RoomNumber + " - " + nights + " dem";
             }
         }

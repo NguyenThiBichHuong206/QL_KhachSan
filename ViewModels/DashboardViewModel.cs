@@ -13,6 +13,7 @@ namespace QLKhachsan.ViewModels
         private readonly HotelRepository _repository;
         private Room _selectedRoom;
         private string _errorMessage;
+        private decimal _todayRevenue;
 
         public DashboardViewModel()
             : this(new HotelRepository())
@@ -86,8 +87,7 @@ namespace QLKhachsan.ViewModels
         {
             get
             {
-                var revenue = Rooms.Where(room => room.IsOccupied).Sum(room => room.PricePerNight);
-                return (revenue / 1000000m).ToString("0.#") + " tr";
+                return (_todayRevenue / 1000000m).ToString("0.#") + " tr";
             }
         }
 
@@ -103,6 +103,8 @@ namespace QLKhachsan.ViewModels
                 ErrorMessage = string.Empty;
                 ReplaceRooms(_repository.GetRooms());
                 ReplaceBookings(_repository.GetRecentBookings());
+                _todayRevenue = _repository.GetTodayRevenue();
+                OnPropertyChanged("DailyRevenueText");
             }
             catch (Exception ex)
             {
