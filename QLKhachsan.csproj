@@ -59,9 +59,15 @@
     <Compile Include="views\Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\AuthRepository.cs" />
     <Compile Include="Data\HotelRepository.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Room.cs" />
+    <Compile Include="Models\UserAccount.cs" />
+    <Compile Include="ViewModels\AuthViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -78,6 +84,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="views\Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
