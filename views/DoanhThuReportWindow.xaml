@@ -1,0 +1,16 @@
+﻿<Window x:Class="QLKhachSan.views.DoanhThuReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wf="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+        xmlns:cr="clr-namespace:CrystalDecisions.Windows.Forms;assembly=CrystalDecisions.Windows.Forms"
+        Title="Báo cáo doanh thu"
+        Height="700"
+        Width="1000"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <wf:WindowsFormsHost>
+            <cr:CrystalReportViewer x:Name="crystalReportViewer"/>
+        </wf:WindowsFormsHost>
+    </Grid>
+</Window>

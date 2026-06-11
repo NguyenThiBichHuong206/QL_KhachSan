@@ -1,0 +1,240 @@
+﻿<UserControl x:Class="QLKhachSan.views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- TIÊU ĐỀ -->
+            <Grid Grid.Row="0" Margin="0,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="TỔNG QUAN"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="#1E293B"/>
+
+                    <TextBlock Text="{Binding ThoiGianCapNhat}"
+                               FontSize="13"
+                               Foreground="#64748B"
+                               Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                        Content="Tải lại"
+                        Width="100"
+                        Height="34"
+                        Command="{Binding TaiLaiCommand}"/>
+            </Grid>
+
+            <!-- CÁC THẺ THỐNG KÊ CHÍNH -->
+            <UniformGrid Grid.Row="1"
+                         Columns="3"
+                         Margin="0,0,0,15">
+
+                <Border Background="#F8FAFC"
+                        BorderBrush="#E2E8F0"
+                        BorderThickness="1"
+                        CornerRadius="14"
+                        Padding="18"
+                        Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="Tổng số phòng"
+                                   Foreground="#64748B"
+                                   FontSize="14"/>
+
+                        <TextBlock Text="{Binding TongSoPhong}"
+                                   Foreground="#1E293B"
+                                   FontSize="32"
+                                   FontWeight="Bold"
+                                   Margin="0,8,0,0"/>
+
+                        <TextBlock Text="Số lượng phòng trong hệ thống"
+                                   Foreground="#94A3B8"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#F8FAFC"
+                        BorderBrush="#E2E8F0"
+                        BorderThickness="1"
+                        CornerRadius="14"
+                        Padding="18"
+                        Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="Phòng trống"
+                                   Foreground="#64748B"
+                                   FontSize="14"/>
+
+                        <TextBlock Text="{Binding SoPhongTrong}"
+                                   Foreground="#1E293B"
+                                   FontSize="32"
+                                   FontWeight="Bold"
+                                   Margin="0,8,0,0"/>
+
+                        <TextBlock Text="Có thể tiếp nhận khách"
+                                   Foreground="#94A3B8"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#F8FAFC"
+                        BorderBrush="#E2E8F0"
+                        BorderThickness="1"
+                        CornerRadius="14"
+                        Padding="18"
+                        Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="Phòng đang thuê"
+                                   Foreground="#64748B"
+                                   FontSize="14"/>
+
+                        <TextBlock Text="{Binding SoPhongDangThue}"
+                                   Foreground="#1E293B"
+                                   FontSize="32"
+                                   FontWeight="Bold"
+                                   Margin="0,8,0,0"/>
+
+                        <TextBlock Text="Phòng đang có khách lưu trú"
+                                   Foreground="#94A3B8"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <!-- CÁC THẺ THỐNG KÊ PHỤ -->
+            <UniformGrid Grid.Row="2"
+                         Columns="3"
+                         Margin="0,0,0,15">
+
+                <Border Background="#F8FAFC"
+                        BorderBrush="#E2E8F0"
+                        BorderThickness="1"
+                        CornerRadius="14"
+                        Padding="18"
+                        Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="Khách hàng"
+                                   Foreground="#64748B"
+                                   FontSize="14"/>
+
+                        <TextBlock Text="{Binding TongSoKhachHang}"
+                                   Foreground="#1E293B"
+                                   FontSize="30"
+                                   FontWeight="Bold"
+                                   Margin="0,8,0,0"/>
+
+                        <TextBlock Text="Tổng hồ sơ khách hàng"
+                                   Foreground="#94A3B8"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#F8FAFC"
+                        BorderBrush="#E2E8F0"
+                        BorderThickness="1"
+                        CornerRadius="14"
+                        Padding="18"
+                        Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="Dịch vụ đang hoạt động"
+                                   Foreground="#64748B"
+                                   FontSize="14"/>
+
+                        <TextBlock Text="{Binding TongSoDichVu}"
+                                   Foreground="#1E293B"
+                                   FontSize="30"
+                                   FontWeight="Bold"
+                                   Margin="0,8,0,0"/>
+
+                        <TextBlock Text="Số dịch vụ đang được bán và có thể chọn khi lập hóa đơn"
+                                   Foreground="#94A3B8"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#F8FAFC"
+                        BorderBrush="#E2E8F0"
+                        BorderThickness="1"
+                        CornerRadius="14"
+                        Padding="18"
+                        Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="Hóa đơn"
+                                   Foreground="#64748B"
+                                   FontSize="14"/>
+
+                        <TextBlock Text="{Binding TongSoHoaDon}"
+                                   Foreground="#1E293B"
+                                   FontSize="30"
+                                   FontWeight="Bold"
+                                   Margin="0,8,0,0"/>
+
+                        <TextBlock Text="Tổng số hóa đơn đã tạo"
+                                   Foreground="#94A3B8"
+                                   FontSize="12"
+                                   Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <!-- DOANH THU -->
+            <Border Grid.Row="3"
+                    Background="#F8FAFC"
+                    BorderBrush="#E2E8F0"
+                    BorderThickness="1"
+                    CornerRadius="14"
+                    Padding="20"
+                    Margin="5">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Tổng doanh thu đã thanh toán"
+                                   Foreground="#64748B"
+                                   FontSize="15"/>
+
+                        <TextBlock Text="{Binding TongDoanhThuText}"
+                                   Foreground="#1E293B"
+                                   FontSize="34"
+                                   FontWeight="Bold"
+                                   Margin="0,8,0,0"/>
+
+                        <TextBlock Text="Doanh thu được tính từ các hóa đơn có trạng thái đã thanh toán."
+                                   Foreground="#94A3B8"
+                                   FontSize="13"
+                                   Margin="0,5,0,0"/>
+                    </StackPanel>
+
+                    <TextBlock Grid.Column="1"
+                               Text="VNĐ"
+                               Foreground="#CBD5E1"
+                               FontSize="42"
+                               FontWeight="Bold"
+                               VerticalAlignment="Center"
+                               Margin="20,0,0,0"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,144 @@
+
+# Visual Studio cache, settings
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.rsuser
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio generated files
+*.tlog
+*.lastbuildstate
+*.unsuccessfulbuild
+*.cache
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+.nuget/
+project.lock.json
+project.assets.json
+artifacts/
+
+# Do NOT ignore packages.config because old .NET Framework projects need it
+!packages.config
+
+# Entity Framework / EDMX generated temp files
+*.edmx.diagram
+*.dbmdl
+*.jfm
+
+# SQL Server local database files
+*.mdf
+*.ldf
+*.ndf
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# ClickOnce / publish output
+publish/
+PublishProfiles/
+*.publishsettings
+*.pubxml.user
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+coverage/
+*.coverage
+*.coveragexml
+*.trx
+
+# ReSharper / Rider
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+.idea/
+
+# VS Code
+.vscode/
+
+# Windows thumbnail/cache
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# WPF generated files / temporary designer files
+*.g.cs
+*.g.i.cs
+*.baml
+*.generated.cs
+
+# BUT keep generated files if they are required in source control
+# Usually WPF generated files are inside obj/, so they are already ignored.
+
+# Crystal Reports temp/cache
+*.rpt.cache
+*.rpttmp
+
+# IIS Express
+.vs/config/applicationhost.config
+
+# Local environment/config secrets
+.env
+.env.*
+*.secret.json
+secrets.json
+
+# SQL Server Management Studio
+*.ssms_suo
+
+# Installer files
+*.msi
+*.exe
+*.zip
+*.7z
+*.rar

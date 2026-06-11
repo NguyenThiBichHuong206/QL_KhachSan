@@ -1,0 +1,139 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="QLKhachSan.views.ReportView"
+             Background="White">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#F1F5F9" CornerRadius="8" Padding="15" Margin="0,0,0,25">
+            <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+                <TextBlock Text="BÁO CÁO DOANH THU" FontSize="18" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center" Margin="0,5,30,5"/>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,5,15,5">
+                    <TextBlock Text="Từ ngày:" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="#475569"/>
+                    <DatePicker SelectedDate="{Binding TuNgay, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,5,20,5">
+                    <TextBlock Text="Đến ngày:" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="#475569"/>
+                    <DatePicker SelectedDate="{Binding DenNgay, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
+                </StackPanel>
+
+                <Button Content="XEM THỐNG KÊ"
+                        Command="{Binding ThongKeCommand}"
+                        Background="#2563EB"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Padding="15,6"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Margin="0,5,20,5"/>
+
+                <!-- Tạm khóa nút in. Sau khi làm Crystal Report nâng cao sẽ mở lại -->
+                <Button Content="🖨️ IN BÁO CÁO"
+                        Background="#475569"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Padding="15,6"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Margin="0,5,0,5"
+                  
+                Command="{Binding InBaoCaoCommand}"/>
+            </WrapPanel>
+        </Border>
+
+        <Grid Grid.Row="1" x:Name="PrintReportArea" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="#2563EB" CornerRadius="8" Padding="15" Margin="0,0,10,0">
+                    <StackPanel>
+                        <TextBlock Text="TỔNG DOANH THU" Foreground="#DBEAFE" FontSize="14" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding TongDoanhThuText, StringFormat=\{0\} VNĐ}" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,12,0,0" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Background="#059669" CornerRadius="8" Padding="15" Margin="10,0,10,0">
+                    <StackPanel av:IsHidden="True">
+                        <TextBlock Text="TỔNG SỐ HÓA ĐƠN" Foreground="#D1FAE5" FontSize="14" FontWeight="SemiBold" av:IsHidden="True"/>
+                        <TextBlock Text="{Binding TongSoHoaDon}" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,12,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Background="#D97706" CornerRadius="8" Padding="15" Margin="10,0,10,0">
+                    <StackPanel>
+                        <TextBlock Text="TỔNG TIỀN PHÒNG" Foreground="#FEF3C7" FontSize="14" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding TongTienPhongText, StringFormat=\{0\} VNĐ}" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,12,0,0" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="3" Background="#7C3AED" CornerRadius="8" Padding="15" Margin="10,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="TỔNG TIỀN DỊCH VỤ" Foreground="#EDE9FE" FontSize="14" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding TongTienDichVuText, StringFormat=\{0\} VNĐ}" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,12,0,0" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <GroupBox Header="DANH SÁCH HÓA ĐƠN CHI TIẾT" Grid.Row="1" FontWeight="Bold" Margin="0,20,0,0" Foreground="#1E293B">
+                <DataGrid ItemsSource="{Binding DanhSachDoanhThuView}" 
+                          AutoGenerateColumns="False" 
+                          IsReadOnly="True" 
+                          HeadersVisibility="Column" 
+                          TextElement.FontWeight="Normal" 
+                          Background="White"
+                          RowHeight="36"
+                          GridLinesVisibility="Horizontal"
+                          BorderBrush="#E2E8F0"
+                          Margin="5">
+
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="#F8FAFC"/>
+                            <Setter Property="Foreground" Value="#475569"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Padding" Value="10,8"/>
+                            <Setter Property="BorderBrush" Value="#E2E8F0"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Mã HĐ" Binding="{Binding MaHD}" Width="59"/>
+                        <DataGridTextColumn Header="Khách hàng" Binding="{Binding TenKhachHang}" Width="1.5*"/>
+                        <DataGridTextColumn Header="Phòng" Binding="{Binding TenPhong}" Width="60"/>
+                        <DataGridTextColumn Header="Ngày nhận" Binding="{Binding NgayCheckIn, StringFormat=\{0:d/MM/yyyy HH:mm\}}" Width="100"/>
+                        <DataGridTextColumn Header="Ngày trả" Binding="{Binding NgayCheckOut, StringFormat=\{0:d/MM/yyyy HH:mm\}}" Width="100"/>
+                        <DataGridTextColumn Header="Tiền phòng" Binding="{Binding TienPhong, StringFormat=\{0:N0\} VNĐ}" Width="1.2*"/>
+                        <DataGridTextColumn Header="Tiền dịch vụ" Binding="{Binding TienDichVu, StringFormat=\{0:N0\} VNĐ}" Width="1.2*"/>
+                        <DataGridTextColumn Header="Tổng tiền" Binding="{Binding TongTien, StringFormat=\{0:N0\} VNĐ}" Width="1.5*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="Foreground" Value="#DC2626"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,767 @@
+﻿<UserControl x:Class="QLKhachSan.views.InventoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+
+    <Grid Margin="8,-8,8,8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="229"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ========================================================= -->
+        <!-- 1. KHUNG TRÁI: PHIẾU NHẬP / NHÀ CUNG CẤP -->
+        <!-- ========================================================= -->
+        <Border Grid.Row="0"
+                Grid.Column="0"
+                Background="#F8FAFC"
+                BorderBrush="#E2E8F0"
+                BorderThickness="1"
+                CornerRadius="12"
+                Padding="10"
+                Margin="0,0,6,8">
+
+            <TabControl>
+                <!-- TAB 1: THÔNG TIN PHIẾU NHẬP -->
+                <TabItem Header="Phiếu nhập">
+                    <Grid Margin="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0"
+                                   Text="THÔNG TIN PHIẾU NHẬP"
+                                   FontSize="15"
+                                   FontWeight="Bold"
+                                   Foreground="#2563EB"
+                                   Margin="0,0,0,8"/>
+
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="34"/>
+                                <RowDefinition Height="34"/>
+                                <RowDefinition Height="34"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="105"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="0"
+                                       Text="Nhà cung cấp"
+                                       VerticalAlignment="Center"/>
+
+                            <ComboBox Grid.Row="0"
+                                      Grid.Column="1"
+                                      Height="28"
+                                      ItemsSource="{Binding DanhSachNhaCungCap}"
+                                      SelectedItem="{Binding SelectedNhaCungCap, Mode=TwoWay}"
+                                      DisplayMemberPath="TenNCC"
+                                      IsEnabled="{Binding ChoPhepChonNhaCungCap}"/>
+
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="0"
+                                       Text="Ngày nhập"
+                                       VerticalAlignment="Center"/>
+
+                            <DatePicker Grid.Row="1"
+                                        Grid.Column="1"
+                                        Height="28"
+                                        SelectedDate="{Binding NgayNhap}"
+                                        IsEnabled="False"/>
+
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="0"
+                                       Text="Tổng tiền"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Row="2"
+                                     Grid.Column="1"
+                                     Height="28"
+                                     Text="{Binding TongTienText, Mode=OneWay}"
+                                     IsReadOnly="True"
+                                     HorizontalContentAlignment="Right"
+                                     FontWeight="Bold"
+                                     Foreground="#16A34A"/>
+                        </Grid>
+
+                        <Grid Grid.Row="2"
+                              Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0"
+                                    Content="Tạo phiếu"
+                                    Height="34"
+                                    Margin="0,0,5,0"
+                                    Background="#2563EB"
+                                    Foreground="White"
+                                    Command="{Binding TaoPhieuCommand}"/>
+
+                            <Button Grid.Column="1"
+                                    Content="Hủy"
+                                    Height="34"
+                                    Margin="5,0,0,0"
+                                    Background="#DC2626"
+                                    Foreground="White"
+                                    Command="{Binding HuyPhieuCommand}"/>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+
+                <!-- TAB 2: NHÀ CUNG CẤP -->
+                <TabItem Header="Nhà cung cấp">
+                    <Grid Margin="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0"
+                                   Text="QUẢN LÝ NHÀ CUNG CẤP"
+                                   FontSize="15"
+                                   FontWeight="Bold"
+                                   Foreground="#2563EB"
+                                   Margin="0,0,0,8"/>
+
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="0"
+                                       Text="Tên NCC"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Row="0"
+                                     Grid.Column="1"
+                                     Height="28"
+                                     Padding="6,0,6,0"
+                                     VerticalContentAlignment="Center"
+                                     Text="{Binding TenNCCMoi, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="0"
+                                       Text="Địa chỉ"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Row="1"
+                                     Grid.Column="1"
+                                     Height="28"
+                                     Padding="6,0,6,0"
+                                     VerticalContentAlignment="Center"
+                                     Text="{Binding DiaChiNCCMoi, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="0"
+                                       Text="SĐT"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Row="2"
+                                     Grid.Column="1"
+                                     Height="28"
+                                     Padding="6,0,6,0"
+                                     VerticalContentAlignment="Center"
+                                     Text="{Binding SDTNCCMoi, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
+
+                        <Grid Grid.Row="2"
+                              Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0"
+                                    Content="Thêm"
+                                    Height="32"
+                                    Margin="0,0,5,0"
+                                    Background="#16A34A"
+                                    Foreground="White"
+                                    Command="{Binding ThemNhaCungCapCommand}"/>
+
+                            <Button Grid.Column="1"
+                                    Content="Sửa"
+                                    Height="32"
+                                    Margin="5,0,5,0"
+                                    Background="#2563EB"
+                                    Foreground="White"
+                                    Command="{Binding SuaNhaCungCapCommand}"/>
+
+                            <Button Grid.Column="2"
+                                    Content="Xóa"
+                                    Height="32"
+                                    Margin="5,0,0,0"
+                                    Background="#DC2626"
+                                    Foreground="White"
+                                    Command="{Binding XoaNhaCungCapCommand}"/>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Border>
+
+        <!-- ========================================================= -->
+        <!-- 2. KHUNG PHẢI: THÊM HÀNG NHẬP / HÀNG HÓA -->
+        <!-- ========================================================= -->
+        <Border Grid.Row="0"
+                Grid.Column="1"
+                Background="#F8FAFC"
+                BorderBrush="#E2E8F0"
+                BorderThickness="1"
+                CornerRadius="12"
+                Padding="10"
+                Margin="6,0,0,8">
+
+            <TabControl>
+                <!-- TAB 1: THÊM HÀNG NHẬP -->
+                <TabItem Header="Thêm hàng nhập">
+                    <Grid Margin="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0"
+                                   Text="THÊM HÀNG NHẬP"
+                                   FontSize="15"
+                                   FontWeight="Bold"
+                                   Foreground="#2563EB"
+                                   Margin="0,0,0,8"/>
+
+                        <Grid Grid.Row="1"
+                              IsEnabled="{Binding ChoPhepNhapChiTiet}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="34"/>
+                                <RowDefinition Height="34"/>
+                                <RowDefinition Height="34"/>
+                                <RowDefinition Height="34"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="0"
+                                       Text="Hàng hóa"
+                                       VerticalAlignment="Center"/>
+
+                            <ComboBox Grid.Row="0"
+                                      Grid.Column="1"
+                                      Grid.ColumnSpan="3"
+                                      Height="28"
+                                      ItemsSource="{Binding DanhSachHangHoa}"
+                                      SelectedItem="{Binding SelectedHangHoa, Mode=TwoWay}"
+                                      DisplayMemberPath="TenHang"/>
+
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="0"
+                                       Text="Đơn vị"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Row="1"
+                                     Grid.Column="1"
+                                     Height="28"
+                                     Text="{Binding DonViTinhText, Mode=OneWay}"
+                                     IsReadOnly="True"/>
+
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="2"
+                                       Text="Tồn kho"
+                                       Margin="8,0,0,0"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Row="1"
+                                     Grid.Column="3"
+                                     Height="28"
+                                     Text="{Binding TonKhoText, Mode=OneWay}"
+                                     IsReadOnly="True"
+                                     HorizontalContentAlignment="Right"/>
+
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="0"
+                                       Text="Số lượng"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Row="2"
+                                     Grid.Column="1"
+                                     Height="28"
+                                     Text="{Binding SoLuong, UpdateSourceTrigger=PropertyChanged}"
+                                     HorizontalContentAlignment="Right"/>
+
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="2"
+                                       Text="Đơn giá"
+                                       Margin="8,0,0,0"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Row="2"
+                                     Grid.Column="3"
+                                     Height="28"
+                                     Text="{Binding DonGia, UpdateSourceTrigger=PropertyChanged}"
+                                     HorizontalContentAlignment="Right"/>
+
+                            <TextBlock Grid.Row="3"
+                                       Grid.Column="0"
+                                       Text="Thành tiền"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Row="3"
+                                     Grid.Column="1"
+                                     Grid.ColumnSpan="3"
+                                     Height="28"
+                                     Text="{Binding ThanhTienTamText, Mode=OneWay}"
+                                     IsReadOnly="True"
+                                     HorizontalContentAlignment="Right"
+                                     FontWeight="Bold"
+                                     Foreground="#16A34A"/>
+                        </Grid>
+
+                        <Button Grid.Row="2"
+                                Content="Thêm vào phiếu"
+                                Height="32"
+                                Width="130"
+                                HorizontalAlignment="Right"
+                                Margin="0,6,0,0"
+                                Background="#16A34A"
+                                Foreground="White"
+                                IsEnabled="{Binding ChoPhepNhapChiTiet}"
+                                Command="{Binding ThemHangCommand}"/>
+                    </Grid>
+                </TabItem>
+
+                <!-- TAB 2: HÀNG HÓA -->
+                <TabItem Header="Hàng hóa">
+                    <Grid Margin="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0"
+                                   Text="QUẢN LÝ HÀNG HÓA"
+                                   FontSize="15"
+                                   FontWeight="Bold"
+                                   Foreground="#EA580C"
+                                   Margin="0,0,0,8"/>
+
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="0"
+                                       Text="Tên hàng"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Row="0"
+                                     Grid.Column="1"
+                                     Grid.ColumnSpan="3"
+                                     Height="28"
+                                     Padding="6,0,6,0"
+                                     VerticalContentAlignment="Center"
+                                     Text="{Binding TenHangMoi, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="0"
+                                       Text="Đơn vị"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Row="1"
+                                     Grid.Column="1"
+                                     Height="28"
+                                     Padding="6,0,6,0"
+                                     VerticalContentAlignment="Center"
+                                     Text="{Binding DonViTinhMoi, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="2"
+                                       Text="Giá nhập"
+                                       Margin="8,0,0,0"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBox Grid.Row="1"
+                                     Grid.Column="3"
+                                     Height="28"
+                                     Padding="6,0,6,0"
+                                     HorizontalContentAlignment="Right"
+                                     VerticalContentAlignment="Center"
+                                     Text="{Binding GiaNhapMoi, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="4"
+                                       Text="Tồn ban đầu là 0. Muốn tăng tồn thì tạo phiếu nhập."
+                                       Foreground="#92400E"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <Grid Grid.Row="2"
+                              Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0"
+                                    Content="Thêm"
+                                    Height="32"
+                                    Margin="0,0,5,0"
+                                    Background="#F97316"
+                                    Foreground="White"
+                                    Command="{Binding ThemHangHoaMoiCommand}"/>
+
+                            <Button Grid.Column="1"
+                                    Content="Sửa"
+                                    Height="32"
+                                    Margin="5,0,5,0"
+                                    Background="#2563EB"
+                                    Foreground="White"
+                                    Command="{Binding SuaHangHoaCommand}"/>
+
+                            <Button Grid.Column="2"
+                                    Content="Xóa"
+                                    Height="32"
+                                    Margin="5,0,0,0"
+                                    Background="#DC2626"
+                                    Foreground="White"
+                                    Command="{Binding XoaHangHoaCommand}"/>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Border>
+
+        <!-- ========================================================= -->
+        <!-- 3. DANH SÁCH PHIẾU NHẬP -->
+        <!-- ========================================================= -->
+        <Border Grid.Row="1"
+                Grid.Column="0"
+                Background="#F8FAFC"
+                BorderBrush="#E2E8F0"
+                BorderThickness="1"
+                CornerRadius="12"
+                Padding="10"
+                Margin="0,0,6,0">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Text="DANH SÁCH PHIẾU NHẬP"
+                           FontSize="15"
+                           FontWeight="Bold"
+                           Foreground="#2563EB"
+                           Margin="0,0,0,8"/>
+
+                <Grid Grid.Row="1"
+                      Margin="0,0,0,8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="32"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="95"/>
+                        <ColumnDefinition Width="125"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Text="Từ:"
+                               VerticalAlignment="Center"/>
+
+                    <DatePicker Grid.Row="0"
+                                Grid.Column="1"
+                                Height="28"
+                                SelectedDate="{Binding TuNgay}"/>
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="2"
+                               Text="Đến:"
+                               Margin="8,0,0,0"
+                               VerticalAlignment="Center"/>
+
+                    <DatePicker Grid.Row="0"
+                                Grid.Column="3"
+                                Height="28"
+                                SelectedDate="{Binding DenNgay}"/>
+
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               Text="Mã:"
+                               VerticalAlignment="Center"/>
+
+                    <TextBox Grid.Row="1"
+                             Grid.Column="1"
+                             Height="28"
+                             Text="{Binding TuKhoaMaPhieu, UpdateSourceTrigger=PropertyChanged}"
+                             VerticalContentAlignment="Center"
+                             Padding="6,0,6,0"/>
+
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="2"
+                               Text="Nhà cung cấp:"
+                               Margin="8,0,0,0"
+                               VerticalAlignment="Center"/>
+
+                    <TextBox Grid.Row="1"
+                             Grid.Column="3"
+                             Height="28"
+                             Text="{Binding TuKhoaNhaCungCap, UpdateSourceTrigger=PropertyChanged}"
+                             VerticalContentAlignment="Center"
+                             Padding="6,0,6,0"/>
+
+                    <Button Grid.Row="2"
+                            Grid.Column="1"
+                            Content="Tìm kiếm"
+                            Height="28"
+                            Width="95"
+                            HorizontalAlignment="Left"
+                            Background="#2563EB"
+                            Foreground="White"
+                            Command="{Binding TimKiemCommand}"/>
+
+                    <Border Grid.Row="2"
+                            Grid.Column="2"
+                            Grid.ColumnSpan="3"
+                            Height="28"
+                            Margin="8,0,0,0"
+                            Background="#EEF2FF"
+                            BorderBrush="#CBD5E1"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            Padding="8,0">
+
+                        <TextBlock Text="{Binding SoKetQuaText}"
+                                   Foreground="#475569"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                </Grid>
+
+                <DataGrid Grid.Row="2"
+                          ItemsSource="{Binding DanhSachPhieuNhap}"
+                          SelectedItem="{Binding SelectedPhieuNhap, Mode=TwoWay}"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserSortColumns="False"
+                          IsReadOnly="True"
+                          HeadersVisibility="Column"
+                          RowHeight="30"
+                          FontSize="12"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Height" Value="30"/>
+                        </Style>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Mã phiếu"
+                                            Binding="{Binding MaPhieuNhap}"
+                                            Width="70"/>
+
+                        <DataGridTextColumn Header="Ngày nhập"
+                                            Binding="{Binding NgayNhap, StringFormat=dd/MM/yyyy HH:mm}"
+                                            Width="120"/>
+
+                        <DataGridTextColumn Header="Nhà cung cấp"
+                                            Binding="{Binding NhaCungCap.TenNCC}"
+                                            Width="170"/>
+
+                        <DataGridTextColumn Header="Tổng tiền"
+                                            Binding="{Binding TongTien, StringFormat=N0}"
+                                            Width="110"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+
+        <!-- ========================================================= -->
+        <!-- 4. CHI TIẾT PHIẾU NHẬP -->
+        <!-- ========================================================= -->
+        <Border Grid.Row="1"
+                Grid.Column="1"
+                Background="#F8FAFC"
+                BorderBrush="#E2E8F0"
+                BorderThickness="1"
+                CornerRadius="12"
+                Padding="10"
+                Margin="6,0,0,0">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Text="CHI TIẾT PHIẾU NHẬP"
+                           FontSize="15"
+                           FontWeight="Bold"
+                           Foreground="#2563EB"
+                           Margin="0,0,0,8"/>
+
+                <TabControl Grid.Row="1">
+                    <TabItem Header="Phiếu đang lập">
+                        <DataGrid ItemsSource="{Binding DanhSachChiTietTam}"
+                                  SelectedItem="{Binding SelectedChiTietTam, Mode=TwoWay}"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserSortColumns="False"
+                                  IsReadOnly="True"
+                                  HeadersVisibility="Column"
+                                  RowHeight="30"
+                                  FontSize="12"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Mã hàng"
+                                                    Binding="{Binding MaHang}"
+                                                    Width="70"/>
+
+                                <DataGridTextColumn Header="Tên hàng"
+                                                    Binding="{Binding HangHoa.TenHang}"
+                                                    Width="*"/>
+
+                                <DataGridTextColumn Header="ĐVT"
+                                                    Binding="{Binding HangHoa.DonViTinh}"
+                                                    Width="60"/>
+
+                                <DataGridTextColumn Header="SL"
+                                                    Binding="{Binding SoLuong}"
+                                                    Width="55"/>
+
+                                <DataGridTextColumn Header="Đơn giá"
+                                                    Binding="{Binding DonGia, StringFormat=N0}"
+                                                    Width="90"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+
+                    <TabItem Header="Phiếu đã lưu">
+                        <DataGrid ItemsSource="{Binding DanhSachChiTietPhieuNhap}"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  CanUserSortColumns="False"
+                                  IsReadOnly="True"
+                                  HeadersVisibility="Column"
+                                  RowHeight="30"
+                                  FontSize="12"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Mã hàng"
+                                                    Binding="{Binding MaHang}"
+                                                    Width="70"/>
+
+                                <DataGridTextColumn Header="Tên hàng"
+                                                    Binding="{Binding HangHoa.TenHang}"
+                                                    Width="*"/>
+
+                                <DataGridTextColumn Header="ĐVT"
+                                                    Binding="{Binding HangHoa.DonViTinh}"
+                                                    Width="60"/>
+
+                                <DataGridTextColumn Header="SL"
+                                                    Binding="{Binding SoLuong}"
+                                                    Width="55"/>
+
+                                <DataGridTextColumn Header="Đơn giá"
+                                                    Binding="{Binding DonGia, StringFormat=N0}"
+                                                    Width="90"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                </TabControl>
+
+                <Grid Grid.Row="2"
+                      Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="135"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="145"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="1"
+                            Content="Lưu phiếu"
+                            Height="36"
+                            Width="120"
+                            HorizontalAlignment="Left"
+                            Margin="-30,0,0,0"
+                            Background="#16A34A"
+                            Foreground="White"
+                            IsEnabled="{Binding ChoPhepLuuPhieu}"
+                            Command="{Binding LuuPhieuNhapCommand}"/>
+
+                    <Button Grid.Column="3"
+                            Content="Xóa dòng"
+                            Height="36"
+                            Width="120"
+                            HorizontalAlignment="Right"
+                            Margin="0,0,40,0"
+                            Background="#DC2626"
+                            Foreground="White"
+                            Command="{Binding XoaHangCommand}"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

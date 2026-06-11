@@ -1,0 +1,288 @@
+﻿<UserControl x:Class="QLKhachSan.views.RoomView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- TIÊU ĐỀ -->
+        <TextBlock Grid.Row="0"
+                   Text="QUẢN LÝ PHÒNG"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   Foreground="#1E293B"
+                   Margin="0,0,0,15"/>
+
+        <!-- FORM NHẬP THÔNG TIN PHÒNG -->
+        <Border Grid.Row="1"
+                Background="#F8FAFC"
+                BorderBrush="#E2E8F0"
+                BorderThickness="1"
+                CornerRadius="12"
+                Padding="15"
+                Margin="0,0,0,15">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="190"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- LEFT: form fields -->
+                <Grid Grid.Column="0" Margin="0,0,15,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.2*"/>
+                            <ColumnDefinition Width="1.2*"/>
+                            <ColumnDefinition Width="1.2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Tên phòng -->
+                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                            <TextBlock Text="Tên phòng" FontWeight="Bold" Margin="0,0,0,4"/>
+                            <TextBox Height="32" Padding="6,0,6,0" VerticalContentAlignment="Center"
+                                     Text="{Binding NewPhong.TenPhong, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+
+                        <!-- Loại phòng -->
+                        <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                            <TextBlock Text="Loại phòng" FontWeight="Bold" Margin="0,0,0,4"/>
+                            <ComboBox Height="32"
+                                      ItemsSource="{Binding DanhSachLoaiPhong}"
+                                      SelectedValue="{Binding NewPhong.MaLoai, UpdateSourceTrigger=PropertyChanged}"
+                                      SelectedValuePath="MaLoai"
+                                      DisplayMemberPath="TenLoai"/>
+                        </StackPanel>
+
+                        <!-- Trạng thái -->
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Trạng thái" FontWeight="Bold" Margin="0,0,0,4"/>
+                            <ComboBox Height="32"
+                                      SelectedIndex="{Binding NewPhong.TrangThai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <ComboBoxItem Content="Trống"/>
+                                <ComboBoxItem Content="Đang thuê"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Buttons -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,18,0,0">
+                        <Button Content="Thêm" Width="90" Height="34" Margin="0,0,8,0"
+                                Background="#16A34A" Foreground="White" FontWeight="Bold"
+                                Command="{Binding AddCommand}"/>
+                        <Button Content="Sửa" Width="90" Height="34" Margin="0,0,8,0"
+                                Background="#2563EB" Foreground="White" FontWeight="Bold"
+                                Command="{Binding UpdateCommand}"/>
+                        <Button Content="Xóa" Width="90" Height="34"
+                                Background="#DC2626" Foreground="White" FontWeight="Bold"
+                                Command="{Binding DeleteCommand}"/>
+                    </StackPanel>
+
+                    <!-- Tìm kiếm -->
+                    <Grid Grid.Row="2" Margin="0,18,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="110"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" Height="32" Margin="0,0,8,0"
+                                 Padding="6,0,6,0" VerticalContentAlignment="Center"
+                                 Text="{Binding TuKhoaTimKiem, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Button Grid.Column="1" Content="Tìm kiếm" Height="32"
+                                Background="#475569" Foreground="White" FontWeight="Bold"
+                                Command="{Binding SearchCommand}"/>
+                    </Grid>
+                </Grid>
+
+                <!-- RIGHT: image preview + choose -->
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Hình ảnh" FontWeight="Bold" Margin="0,0,0,4"/>
+
+                    <Border Width="170" Height="125" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="8"
+                            Background="White" ClipToBounds="True">
+                        <Grid>
+                            <!-- Preview binds to ViewModel absolute preview path -->
+                            <Image Stretch="UniformToFill"
+                                   Source="{Binding HinhAnhPreviewPath}">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding HinhAnhPreviewPath}" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding HinhAnhPreviewPath}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+
+                            <TextBlock Text="Chưa có ảnh" Foreground="#94A3B8" FontStyle="Italic"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding HinhAnhPreviewPath}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding HinhAnhPreviewPath}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+
+                    <Button Content="Chọn ảnh" Height="32" Margin="0,10,0,0"
+                            Background="#2563EB" Foreground="White" FontWeight="Bold"
+                            Command="{Binding ChooseImageCommand}"/>
+
+                    <TextBlock Text="Ảnh sẽ được lưu trong Images/Rooms" TextWrapping="Wrap"
+                               Foreground="#64748B" FontSize="11" Margin="0,6,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- DANH SÁCH PHÒNG -->
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding DanhSachPhong}"
+                  SelectedItem="{Binding SelectedRoom, Mode=TwoWay}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserSortColumns="False"
+                  IsReadOnly="True"
+                  HeadersVisibility="Column"
+                  RowHeight="58"
+                  FontSize="14"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto">
+
+            <DataGrid.Resources>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Height" Value="32"/>
+                </Style>
+
+                <Style TargetType="DataGridCell">
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Padding" Value="5,0,5,0"/>
+                </Style>
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Mã phòng" Binding="{Binding MaPhong}" Width="80" CanUserSort="False"/>
+                <DataGridTextColumn Header="Tên phòng" Binding="{Binding TenPhong}" Width="*" CanUserSort="False"/>
+                <DataGridTextColumn Header="Mã loại" Binding="{Binding MaLoai}" Width="90" CanUserSort="False"/>
+
+                <!-- Trạng thái -->
+                <DataGridTemplateColumn Header="Trạng thái" Width="120" CanUserSort="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="10" Padding="8,4" HorizontalAlignment="Left">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="#E2E8F0"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding TrangThai}" Value="0">
+                                                <Setter Property="Background" Value="#DCFCE7"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding TrangThai}" Value="1">
+                                                <Setter Property="Background" Value="#FEE2E2"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <TextBlock FontWeight="Bold">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="Không rõ"/>
+                                            <Setter Property="Foreground" Value="#475569"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding TrangThai}" Value="0">
+                                                    <Setter Property="Text" Value="Trống"/>
+                                                    <Setter Property="Foreground" Value="#16A34A"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding TrangThai}" Value="1">
+                                                    <Setter Property="Text" Value="Đang thuê"/>
+                                                    <Setter Property="Foreground" Value="#DC2626"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Thumbnail column (no long path) -->
+                <DataGridTemplateColumn Header="Ảnh" Width="90" CanUserSort="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Width="62" Height="42" BorderBrush="#CBD5E1" BorderThickness="1" CornerRadius="6"
+                                    Background="White" ClipToBounds="True" HorizontalAlignment="Center">
+                                <Grid>
+                                    <Image Source="{Binding HinhAnhFullPath}"
+                                           Stretch="UniformToFill">
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HinhAnhFullPath}" Value="">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding HinhAnhFullPath}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+
+                                    <TextBlock Text="Không ảnh" FontSize="10" Foreground="#94A3B8" HorizontalAlignment="Center"
+                                               VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HinhAnhFullPath}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding HinhAnhFullPath}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
